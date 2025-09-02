@@ -3,8 +3,32 @@ package org.example.crud
 import org.example.entidades.CaixaDAgua
 import org.example.enumeradores.Cores
 import org.example.enumeradores.Material
+import sun.rmi.transport.Connection
 
-fun cadastrarCaixa(){
+fun criarTabelaCaixa() {
+    val conectar = EntidadeJDBC(
+        url = "jdbc:postgresql://localhost:5432/postgres",
+        usuario = "postgres",
+        senha = "root" //senha de vocês é essa -> postgres
+    )
+
+    val sql = "CREATE TABLE IF NOT EXISTS CaixaDAgua" +
+            "  (id serial NOT NULL PRIMARY KEY," +
+            " material varchar(255)," +
+            " capacidade float," +
+            " cor float," +
+            " peso float," +
+            " preco varchar(255)," +
+            " dimensao float" +
+            ")"
+    val banco = conectar.conectarComBanco()
+    val enviarParaBanco = banco!!.createStatement().execute(sql)
+    println(enviarParaBanco)//Se retornar false ou 1, deu certo!
+    banco.close()//Encerra a conexão com o banco
+
+}
+
+fun cadastrarCaixa() {
     /*
     * val material: Material,
     val capacidade : Int,
@@ -20,8 +44,8 @@ fun cadastrarCaixa(){
     println("3 - Metal")
     println("4 - Fibra")
     val opcao = readln().toInt()
-    val material : Material
-    when(opcao){
+    val material: Material
+    when (opcao) {
         1 -> material = Material.PLASTICO
         2 -> material = Material.PVC
         3 -> material = Material.METAL
@@ -38,8 +62,8 @@ fun cadastrarCaixa(){
     println("6 - Verde")
     println("7 - Metalica")
     val opcaoCores = readln().toInt()
-    val cores : Cores
-    when(opcao){
+    val cores: Cores
+    when (opcao) {
         1 -> cores = Cores.AZUL
         2 -> cores = Cores.PRETA
         3 -> cores = Cores.BRANCA
@@ -66,7 +90,7 @@ fun cadastrarCaixa(){
     //Salvar as variáveis agora dentro da classe
     //Conecte p atributo da Classe a variavel que o usuário digitou
 
-    val dimenssao = arrayOf(alt,lag,prof)
+    val dimenssao = arrayOf(alt, lag, prof)
     CaixaDAgua(
         material = material,
         cor = cores,
@@ -76,16 +100,19 @@ fun cadastrarCaixa(){
         capacidade = capacidade,
 
 
-    )
+        )
 
 
 }
-fun editarCaixaa(){
+
+fun editarCaixaa() {
 
 }
-fun listarCaixas(){
+
+fun listarCaixas() {
 
 }
-fun excluirCaixa(){
+
+fun excluirCaixa() {
 
 }
